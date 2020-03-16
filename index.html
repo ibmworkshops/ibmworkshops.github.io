@@ -126,16 +126,6 @@ a, a:hover {
 		</td>
 	</tr>
 
-  <script src="https://web-chat.global.assistant.watson.cloud.ibm.com/loadWatsonAssistantChat.js"></script>
-  <script>
-    window.loadWatsonAssistantChat({
-      integrationID: "31655050-feff-47e9-8b68-931164d387d6", // The ID of this integration.
-      region: "eu-de" // The region your integration is hosted in.
-    }).then(function(instance){
-      instance.render();
-    });
-  </script>
-
 	<!-- LIST -->
 	<tr>
 		<td align="center" valign="top" class="list1 list-item">
@@ -367,6 +357,15 @@ a, a:hover {
 
 <!-- End of SECTION / BACKGROUND -->
 </td></tr></table>
+<script src="https://web-chat.global.assistant.watson.cloud.ibm.com/loadWatsonAssistantChat.js"></script>
+<script>
+  window.loadWatsonAssistantChat({
+    integrationID: "31655050-feff-47e9-8b68-931164d387d6", // The ID of this integration.
+    region: "eu-de" // The region your integration is hosted in.
+  }).then(function(instance){
+    instance.render();
+  });
+</script>
 
 </body>
 </html>
