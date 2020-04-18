@@ -1,6 +1,14 @@
 <html>
 <head>
   <style>
+		.bg {
+  background-image: url('images/sechenov.jpg');
+	background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+}
     @keyframes slideInRight {
       from {
         transform: translate3d(100%, 0, 0);
@@ -54,7 +62,7 @@
   </style>
 </head>
 <body>
-	<img src="/images/sechenov.jpg"/>
+<div class="bg"></div>
 	Сеченовский Университет запустил виртуального помощника по теме COVID-19 на основе искусственного интеллекта IBM
 <!-- We want to hide this element initially, because Web Chat isn't ready yet. -->
 <button type="button" class="chatLauncher" style="display:none;">
