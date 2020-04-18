@@ -1,0 +1,91 @@
+<html>
+<head>
+  <style>
+    @keyframes slideInRight {
+      from {
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+      }
+
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    button.chatLauncher {
+      animation-duration: 0.5s;
+      transition-duration: 0.5s;
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 9999;
+      border: 4px solid #075cc2;
+      padding: 1em;
+      border-radius: 8px;
+      margin: 0;
+      text-decoration: none;
+      background-color: #ffffff;
+      color: #454545;
+      font-family: sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: left;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 264px;
+      opacity: 0;
+    }
+
+    button.chatLauncher.open {
+      animation-name: slideInRight;
+      opacity: 1;
+    }
+
+    button.chatLauncher:hover,
+    button.chatLauncher:focus {
+      background-color: rgb(225, 225, 254);
+      border: 4px solid #0053ba;
+    }
+
+    button.chatLauncher:focus {
+      outline: 1px solid #0053ba;
+      outline-offset: -4px;
+    }
+  </style>
+</head>
+<body>
+	Сеченовский Университет запустил виртуального помощника по теме COVID-19 на основе искусственного интеллекта IBM
+<!-- We want to hide this element initially, because Web Chat isn't ready yet. -->
+<button type="button" class="chatLauncher" style="display:none;">
+  <div>
+    <strong>Есть вопросы по COVID-19?</strong> Поговорите с нашим виртуальным ассистентом!
+  </div>
+</button>
+<script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js"></script>
+<script>
+  const options = {
+    integrationID: '4a270144-b861-4e64-a6f9-53fc487f0a80',
+    region: 'eu-de',
+    showLauncher: false
+  };
+  window.loadWatsonAssistantChat(options).then(function(instance){
+    // Select the button element from the page.
+    const button = document.querySelector('.chatLauncher');
+
+    // Add the event listener to open your Web Chat.
+    button.addEventListener('click', () => {
+      instance.openWindow();
+    });
+
+    // Render the Web Chat. Nothing appears on the page, because the launcher is
+    // hidden and the Web Chat window is closed by default.
+    instance.render().then(() => {
+      // Now that Web Chat has been rendered (but is still closed), we make the
+      // custom launcher button visible.
+      button.style.display = 'block';
+      button.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
