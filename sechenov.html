@@ -1,14 +1,19 @@
 <html>
 <head>
   <style>
-		.bg {
-  background-image: url('images/sechenov.jpg');
-	background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-}
+		* {
+            margin: 0;
+            padding: 0;
+        }
+        .imgbox {
+            display: grid;
+            height: 100%;
+        }
+        .center-fit {
+            max-width: 100%;
+            max-height: 100vh;
+            margin: auto;
+        }
     @keyframes slideInRight {
       from {
         transform: translate3d(100%, 0, 0);
@@ -62,7 +67,9 @@
   </style>
 </head>
 <body>
-<div class="bg"></div>
+<div class="imgbox">
+    <img class="center-fit" src='images/sechenov.jpg'>
+</div>
 	<!-- We want to hide this element initially, because Web Chat isn't ready yet. -->
 <button type="button" class="chatLauncher" style="display:none;">
   <div>
