@@ -1,19 +1,62 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<style>
+  .chatElement {
+    height: 600px;
+    width: 80%;
+		display:inline-block; /*so they display inline */
+  }
+	.cell {
+    height: 600px;
+    width: 10%;
+		display:inline-block; /*so they display inline */
+  }
+	.table{
+position:relative;  /*so children div can use 100% height and not go over */
+width:100%; /* as long as this div's parent is body it will take up whole screen */
+height:600px; /*make whatever you want */
+padding:8px; /* will make that spacing you wanted */
+}
+
+</style>
 <script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js"></script>
+
+</head>
+<body>
+	<div class="table">
+   <div class="cell"></div>
+   <div class="chatElement"></div>
+   <div class="cell"></div>
+</div>
+
 <script>
-  window.loadWatsonAssistantChat({
-    integrationID: "fa69c236-288a-4c1d-92ed-5c134b93e8e7", // The ID of this integration.
-		openChatByDefault: true,
-		carbonTheme: 'g10',
-    region: "eu-de" // The region your integration is hosted in.
-  }).then(function(instance){
+const element = document.querySelector('.chatElement');
+const options = {
+	integrationID: "fa69c236-288a-4c1d-92ed-5c134b93e8e7", // The ID of this integration.
+	openChatByDefault: true,
+	carbonTheme: 'g10',
+	region: "eu-de", // The region your integration is hosted in.
+	// Provide the custom element.
+  element: element,
+  // Hide the close button since we want it always open.
+  hideCloseButton: true,
+  // Hide the default launcher.
+  showLauncher: false,
+  // Make the window open by default.
+  openChatByDefault: true
+};
+  window.loadWatsonAssistantChat(options).then(function(instance){
 		const customLanguagePack = {
 	    "input_placeholder": "Введите ваш вопрос...",
 	    "options_select": "Выберите ваш вариант",
 			"options_seeMore": "Посмотреть другие опции"
 	  };
+		instance.on({ type: "pre:send", handler: handler });
+		instance.updateLanguagePack(customLanguagePack);
+		instance.render();
+});
+
 		/**
  * Console out the context object.
  */
@@ -45,13 +88,8 @@ function handler(event) {
 			}
 	}
 }
-instance.on({ type: "pre:send", handler: handler });
-	  instance.updateLanguagePack(customLanguagePack);
-    instance.render();
-  });
-</script>
-</head>
-<body>
 
+
+</script>
 </body>
 </html>
