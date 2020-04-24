@@ -24,21 +24,16 @@ padding:8px; /* will make that spacing you wanted */
 
 </head>
 <body>
-	<div class="table">
-   <div class="cell"></div>
-   <div class="chatElement"></div>
-   <div class="cell"></div>
-</div>
 
 <script>
-const element = document.querySelector('.chatElement');
+
 const options = {
 	integrationID: "fa69c236-288a-4c1d-92ed-5c134b93e8e7", // The ID of this integration.
 	openChatByDefault: true,
 	carbonTheme: 'g10',
 	region: "eu-de", // The region your integration is hosted in.
 	// Provide the custom element.
-  //element: element,
+  // element: element,
   // Hide the close button since we want it always open.
   hideCloseButton: true,
   // Hide the default launcher.
@@ -46,6 +41,7 @@ const options = {
   // Make the window open by default.
   openChatByDefault: true
 };
+
   window.loadWatsonAssistantChat(options).then(function(instance){
 		const customLanguagePack = {
 	    "input_placeholder": "Введите ваш вопрос...",
@@ -57,37 +53,39 @@ const options = {
 		instance.render();
 });
 
-		/**
- * Console out the context object.
- */
-
- function loadJSONSync(url, data)
-{
-  var xmlhttp=new XMLHttpRequest();
-  xmlhttp.open("POST",url,false);
-  xmlhttp.setRequestHeader("Content-Type", "application/json");
-
-  xmlhttp.send('{ "text":"'+data+'"}');
-  if (xmlhttp.status==200)
-  {
-    return JSON.parse(xmlhttp.responseText);
-  }
-  else {
-    // TODO Throw exception
-    return null;
-  }
-}
 function handler(event) {
 	var myData = event.data.input['text'];
 	if (myData!="") {
-			var answer = loadJSONSync('http://9.220.198.214:5999/spell_text',myData);
+			var answer = loadJSONSync("https://covidspellcheck152.ddns.net/spell_text",myData);
 			if (answer!=null ) {
 				event.data.input.text=answer.spelling_text;
-				console.log("answer.text=",answer.text);
-				console.log("answer.spelling_text=",answer.spelling_text);
+				console.log("answer.text = " + answer.text);
+				console.log("answer.spelling_text = " + answer.spelling_text);
 			}
 	}
 }
+
+function loadJSONSync(url, data)
+		{
+		  var xmlhttp=new XMLHttpRequest();
+		  xmlhttp.open("POST",url,false);
+		  xmlhttp.setRequestHeader("Content-Type", "application/json");
+			try {
+			  xmlhttp.send('{ "text":"'+data+'"}');
+			} catch(exception) {
+			  if(exception.name == 'NetworkError') {
+			    console.log('There was a network error!');
+			  }
+			}
+		  if (xmlhttp.status==200)
+		  {
+		    return JSON.parse(xmlhttp.responseText);
+		  }
+		  else {
+		    return null;
+		  }
+		}
+
 
 
 </script>
