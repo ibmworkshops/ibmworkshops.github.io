@@ -64,20 +64,62 @@
 </button>
 <script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js"></script>
 <script>
+
+
+function handler(event) {
+	var myData = event.data.input['text'];
+	if (myData!="") {
+			var answer = loadJSONSync("https://covidspellcheck152.ibm-platform.club/spell_text",myData);
+			if (answer!=null ) {
+				event.data.input.text=answer.spelling_text;
+				console.log("answer.text = " + answer.text);
+				console.log("answer.spelling_text = " + answer.spelling_text);
+			}
+	}
+}
+
+function loadJSONSync(url, data)
+		{
+		  var xmlhttp=new XMLHttpRequest();
+		  xmlhttp.open("POST",url,false);
+		  xmlhttp.setRequestHeader("Content-Type", "application/json");
+			try {
+			  xmlhttp.send('{ "text":"'+data+'"}');
+			} catch(exception) {
+			  if(exception.name == 'NetworkError') {
+			    console.log('There was a network error!');
+			  }
+			}
+		  if (xmlhttp.status==200)
+		  {
+		    return JSON.parse(xmlhttp.responseText);
+		  }
+		  else {
+		    return null;
+		  }
+		}
+
   const options = {
     integrationID: '4a270144-b861-4e64-a6f9-53fc487f0a80',
     region: 'eu-de',
     showLauncher: false
   };
+
   window.loadWatsonAssistantChat(options).then(function(instance){
     // Select the button element from the page.
+		const customLanguagePack = {
+			"input_placeholder": "Введите ваш вопрос...",
+			"options_select": "Выберите ваш вариант",
+			"options_seeMore": "Посмотреть другие опции"
+		};
     const button = document.querySelector('.chatLauncher');
 
     // Add the event listener to open your Web Chat.
     button.addEventListener('click', () => {
       instance.openWindow();
     });
-
+		instance.on({ type: "pre:send", handler: handler });
+		instance.updateLanguagePack(customLanguagePack);
     // Render the Web Chat. Nothing appears on the page, because the launcher is
     // hidden and the Web Chat window is closed by default.
     instance.render().then(() => {
