@@ -38,7 +38,7 @@ const options = {
 function handler(event) {
 	var myData = event.data.input['text'];
 	if (myData!="") {
-			var answer = loadJSONSync("https://covidspellcheck152.ddns.net/spell_text",myData);
+			var answer = loadJSONSync("https://covidspellcheck152.ibm-platform.club/spell_text",myData);
 			if (answer!=null ) {
 				event.data.input.text=answer.spelling_text;
 				console.log("answer.text = " + answer.text);
