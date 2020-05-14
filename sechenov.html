@@ -1,134 +1,62 @@
 <html>
 <head>
-  <style>
+	<style>
+	@font-face {
+		font-family: Inter-Bold;
+		src: url(//ibmworkshops.github.io/wa-tools/fonts/Inter-Bold-slnt=0.ttf);
+	}
+	.chat-bot-launcher__button {
+		cursor: pointer;
+		position: fixed;
+		border-radius: 4px;
+		right: 30px;
+		bottom: 30px;
+		background-color: #053518;
+		padding: 8px 20px 8px 12px;
+		z-index: 1000;
+		opacity: 0;
+		transition: 0.25s;
+	}
+	.chat-bot-launcher__button.open {
+		opacity: 1;
+	}
+	.chat-bot-launcher__button-text {
+		margin-left: 12px;
+		font-family: Inter-Bold;
+		font-size: 16px;
+		line-height: 20px;
+		color: #FFFFFF;
+	}
 
-    @keyframes slideInRight {
-      from {
-        transform: translate3d(100%, 0, 0);
-        visibility: visible;
-      }
+</style>
+<!-- IBM Coronavirus assistant -->
+<script src="https://ibmworkshops.github.io/wa-tools/watsonAssistantRus.js"></script>
 
-      to {
-        transform: translate3d(0, 0, 0);
-      }
-    }
+<script>
+	const options = {
+	  integrationID: "4a270144-b861-4e64-a6f9-53fc487f0a80",
+	  region: "eu-de",
+	  showLauncher: false,
+	};
+	window.loadWatsonAssistantChat(options).then(function(instance) {
+		const button = document.querySelector('.chatLauncher');
+		function hideLauncher() { button.classList.remove('open'); }
+		function showLauncher() { button.classList.add('open'); }
+		instance.on({ type: "window:open", handler: hideLauncher });
+		instance.on({ type: "window:close", handler: showLauncher });
+		button.addEventListener('click', function clickListener() {  instance.openWindow(); });
+		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandler() });
+    instance.updateLanguagePack(customLanguagePackRUS);
+		instance.render().then(showLauncher);
+	  }
+	);
+</script>
 
-    button.chatLauncher {
-      animation-duration: 0.5s;
-      transition-duration: 0.5s;
-      position: fixed;
-      bottom: 32px;
-      right: 32px;
-      z-index: 9999;
-      border: 4px solid #d900ff;
-      padding: 1em;
-      border-radius: 8px;
-      margin: 0;
-      text-decoration: none;
-      background-color: #ffffff;
-      color: #454545;
-      font-family: sans-serif;
-      font-size: 1rem;
-      cursor: pointer;
-      text-align: center;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      width: 120px;
-      opacity: 0;
-    }
-
-    button.chatLauncher.open {
-      animation-name: slideInRight;
-      opacity: 1;
-    }
-
-    button.chatLauncher:hover,
-    button.chatLauncher:focus {
-      background-color: rgb(225, 225, 254);
-      border: 4px solid #0053ba;
-    }
-
-    button.chatLauncher:focus {
-      outline: 1px solid #0053ba;
-      outline-offset: -4px;
-    }
-  </style>
 </head>
 <body>
-	<!-- We want to hide this element initially, because Web Chat isn't ready yet. -->
-<img src="images/sechenov.jpg" width="1200"/>
-<button type="button" class="chatLauncher" style="display:none;">
-  <div>
-    <strong>COVID-19</strong>
-  </div>
-</button>
-<script src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js"></script>
-<script>
-
-
-function handler(event) {
-	var myData = event.data.input['text'];
-	if (myData!="") {
-			var answer = loadJSONSync("https://covidspellcheck152.ibm-platform.club/spell_text",myData);
-			if (answer!=null ) {
-				event.data.input.text=answer.spelling_text;
-				console.log("answer.text = " + answer.text);
-				console.log("answer.spelling_text = " + answer.spelling_text);
-			}
-	}
-}
-
-function loadJSONSync(url, data)
-		{
-		  var xmlhttp=new XMLHttpRequest();
-		  xmlhttp.open("POST",url,false);
-		  xmlhttp.setRequestHeader("Content-Type", "application/json");
-			try {
-			  xmlhttp.send('{ "text":"'+data+'"}');
-			} catch(exception) {
-			  if(exception.name == 'NetworkError') {
-			    console.log('There was a network error!');
-			  }
-			}
-		  if (xmlhttp.status==200)
-		  {
-		    return JSON.parse(xmlhttp.responseText);
-		  }
-		  else {
-		    return null;
-		  }
-		}
-
-  const options = {
-    integrationID: '4a270144-b861-4e64-a6f9-53fc487f0a80',
-    region: 'eu-de',
-    showLauncher: false
-  };
-
-  window.loadWatsonAssistantChat(options).then(function(instance){
-    // Select the button element from the page.
-		const customLanguagePack = {
-			"input_placeholder": "Введите ваш вопрос...",
-			"options_select": "Выберите ваш вариант",
-			"options_seeMore": "Посмотреть другие опции"
-		};
-    const button = document.querySelector('.chatLauncher');
-
-    // Add the event listener to open your Web Chat.
-    button.addEventListener('click', () => {
-      instance.openWindow();
-    });
-		instance.on({ type: "pre:send", handler: handler });
-		instance.updateLanguagePack(customLanguagePack);
-    // Render the Web Chat. Nothing appears on the page, because the launcher is
-    // hidden and the Web Chat window is closed by default.
-    instance.render().then(() => {
-      // Now that Web Chat has been rendered (but is still closed), we make the
-      // custom launcher button visible.
-      button.style.display = 'block';
-      button.classList.add('open');
-    });
-  });
-</script>
+	<div class="chat-bot-launcher__button chatLauncher">
+		<img src="covid.svg">
+		<span class="chat-bot-launcher__button-text">про COVID-19</span>
+	</div>
 </body>
 </html>
