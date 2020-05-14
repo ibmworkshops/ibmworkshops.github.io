@@ -46,7 +46,7 @@ const customLanguagePackRUS = {
 	"options_seeMore": "Посмотреть другие опции"
 };
 
-function watsionassistant-handler(event) {
+function watsonAssistantSpellCheckHandler(event) {
 	var myData = event.data.input['text'];
 	if (myData!="") {
 		var answer = loadJSONSync("https://covidspellcheck152.ibm-platform.club/spell_text",myData);
