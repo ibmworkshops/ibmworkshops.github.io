@@ -48,7 +48,7 @@ const customLanguagePackRUS = {
 	"options_seeMore": "Посмотреть другие опции"
 };
 
-function watsonAssistantSpellCheckHandler(event) {
+function watsonAssistantSpellCheckHandlerRU(event) {
 	if (event != undefined ) {
 	var myData = event.data.input['text'];
 	if (myData!="") {

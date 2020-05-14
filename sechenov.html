@@ -32,7 +32,7 @@
 	}
 
 </style>
-<!-- IBM Coronavirus assistant -->
+
 <script src="https://ibmworkshops.github.io/wa-tools/watsonAssistantRus.js"></script>
 
 <script>
@@ -50,7 +50,7 @@
 		instance.on({ type: "window:close", handler: showLauncher });
 		button.addEventListener('click', function clickListener() {  instance.openWindow(); });
 		// Define watsonSpellCheckerRU preprocessor
-		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandler });
+		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandlerRU });
 		// updateLanguagePack for Russian language
     instance.updateLanguagePack(customLanguagePackRUS);
 		instance.render().then(showLauncher);
