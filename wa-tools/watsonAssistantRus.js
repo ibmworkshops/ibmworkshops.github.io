@@ -49,6 +49,7 @@ const customLanguagePackRUS = {
 };
 
 function watsonAssistantSpellCheckHandler(event) {
+	if (event != undefined ) {
 	var myData = event.data.input['text'];
 	if (myData!="") {
 		var answer = watsonAssistantLoadJSONSync(waSpellCheckerRUURL,myData);
@@ -58,7 +59,8 @@ function watsonAssistantSpellCheckHandler(event) {
 			console.log("answer.spelling_text = " + answer.spelling_text);
 		}
 	}
-}
+ }
+};
 
 function watsonAssistantLoadJSONSync(url, data) {
 	var xmlhttp=new XMLHttpRequest();
