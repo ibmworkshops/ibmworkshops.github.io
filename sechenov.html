@@ -3,7 +3,7 @@
 	<style>
 	@font-face {
 		font-family: Inter-Bold;
-		src: url(//ibmworkshops.github.io/wa-tools/fonts/Inter-Bold-slnt=0.ttf);
+		src: url(https://ibmworkshops.github.io/wa-tools/fonts/Inter-Bold-slnt=0.ttf);
 	}
 	.chat-bot-launcher__button {
 		cursor: pointer;
@@ -39,13 +39,16 @@
 	  showLauncher: false,
 	};
 	window.loadWatsonAssistantChat(options).then(function(instance) {
+		// Define launcherButton
 		const button = document.querySelector('.chatLauncher');
 		function hideLauncher() { button.classList.remove('open'); }
 		function showLauncher() { button.classList.add('open'); }
 		instance.on({ type: "window:open", handler: hideLauncher });
 		instance.on({ type: "window:close", handler: showLauncher });
 		button.addEventListener('click', function clickListener() {  instance.openWindow(); });
-		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandler() });
+		// Define watsonSpellCheckerRU preprocessor
+		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandler });
+		// updateLanguagePack for Russian language
     instance.updateLanguagePack(customLanguagePackRUS);
 		instance.render().then(showLauncher);
 	  }
@@ -55,7 +58,7 @@
 </head>
 <body>
 	<div class="chat-bot-launcher__button chatLauncher">
-		<img src="covid.svg">
+		<img src="https://ibmworkshops.github.io/wa-tools/images/covid.svg">
 		<span class="chat-bot-launcher__button-text">про COVID-19</span>
 	</div>
 </body>
