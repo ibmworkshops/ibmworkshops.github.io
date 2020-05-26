@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+	@font-face {
+		font-family: Inter-Bold;
+		src: url(https://ibmworkshops.github.io/wa-tools/fonts/Inter-Bold-slnt=0.ttf);
+	}
+	.chat-bot-launcher__button {
+		cursor: pointer;
+		position: fixed;
+		border-radius: 4px;
+		right: 30px;
+		bottom: 30px;
+		background-color: #053518;
+		padding: 8px 20px 8px 12px;
+		z-index: 1000;
+		opacity: 0;
+		transition: 0.25s;
+		display: flex;
+		align-items: center;
+	}
+	.chat-bot-launcher__button.open {
+		opacity: 1;
+	}
+	.chat-bot-launcher__button-text {
+		margin-left: 12px;
+		font-family: Inter-Bold;
+		font-size: 16px;
+		line-height: 20px;
+		color: #FFFFFF;
+	}
+
+</style>
+
+<script src="https://ibmworkshops.github.io/wa-tools/watsonAssistantRus.js"></script>
+
+<script>
+	const options = {
+	  integrationID: "661de2a7-718c-446d-a524-580141c6871d",
+	  region: "eu-de",
+	  showLauncher: false,
+	};
+	window.loadWatsonAssistantChat(options).then(function(instance) {
+		// Define launcherButton
+		const button = document.querySelector('.chatLauncher');
+		function hideLauncher() { button.classList.remove('open'); }
+		function showLauncher() { button.classList.add('open'); }
+		instance.on({ type: "window:open", handler: hideLauncher });
+		instance.on({ type: "window:close", handler: showLauncher });
+		button.addEventListener('click', function clickListener() {  instance.openWindow(); });
+		// Define watsonSpellCheckerRU preprocessor
+		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandlerRU });
+		// updateLanguagePack for Russian language
+    instance.updateLanguagePack(customLanguagePackRUS);
+		instance.render().then(showLauncher);
+	  }
+	);
+</script>
+
+</head>
+<body>
+	<div class="chat-bot-launcher__button chatLauncher">
+		<img src="https://ibmworkshops.github.io/wa-tools/images/covid.svg">
+		<span class="chat-bot-launcher__button-text">ЮФУ: стоп COVID-19</span>
+	</div>
+</body>
+</html>
