@@ -3,22 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="https://ibmworkshops.github.io/wa-tools/watsonAssistantRus.js"></script>
-
 </head>
 <body>
 
 <script>
 
-const options = {
-	integrationID: "562b129b-f506-44b6-bed8-40d521e01d8f", // The ID of this integration.
-	serviceInstanceID: "64f1fddd-c557-4ad2-af15-ce08011b1a30",
-	openChatByDefault: true,
-	carbonTheme: 'g10',
-	region: "eu-de",
-  hideCloseButton: true,
-  showLauncher: false,
-  openChatByDefault: true
-};
+	const options = {
+		// HSE id
+		integrationID: "562b129b-f506-44b6-bed8-40d521e01d8f",
+		serviceInstanceID: "64f1fddd-c557-4ad2-af15-ce08011b1a30",
+		carbonTheme: 'g10',
+		region: "eu-de",
+	  //hideCloseButton: true,
+	  //showLauncher: false,
+	  //openChatByDefault: true
+	};
 
   window.loadWatsonAssistantChat(options).then(function(instance){
 		// Define watsonSpellCheckerRU preprocessor
@@ -27,6 +26,7 @@ const options = {
     instance.updateLanguagePack(customLanguagePackRUS);
 		instance.render();
   });
+
 
 </script>
 </body>
