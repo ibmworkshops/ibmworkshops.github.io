@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ibmworkshops.github.io/wa-tools/watsonAssistantRus.js"></script>
+</head>
+<body>
+
+<script>
+
+	const options = {
+		// HSE id
+		integrationID: "8bfe2bf4-884a-4128-b02b-12acf3298760",
+		serviceInstanceID: "94209aea-b602-436e-87bd-ecbc79e4dc9e",
+		carbonTheme: 'g10',
+		region: "eu-de",
+	  //hideCloseButton: true,
+	  //showLauncher: false,
+	  //openChatByDefault: true
+	};
+
+  window.loadWatsonAssistantChat(options).then(function(instance){
+		// Define watsonSpellCheckerRU preprocessor
+		instance.on({ type: "pre:send", handler: watsonAssistantSpellCheckHandlerRU });
+		// updateLanguagePack for Russian language
+    instance.updateLanguagePack(customLanguagePackRUS);
+		instance.render();
+  });
+
+
+</script>
+</body>
+</html>
