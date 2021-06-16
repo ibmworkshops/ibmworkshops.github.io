@@ -63,6 +63,20 @@ a, a:hover {
 	color: #000000;"
 	bgcolor="#F0F0F0"
 	text="#000000">
+	
+	<script>
+  window.watsonAssistantChatOptions = {
+      integrationID: "f524800a-1c4f-45cc-b6be-8b08655c2122", // The ID of this integration.
+      region: "eu-de", // The region your integration is hosted in.
+      serviceInstanceID: "dc9f6a2b-8b00-4d62-9e90-ec7b0288ceb0", // The ID of your service instance.
+      onLoad: function(instance) { instance.render(); }
+    };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+    document.head.appendChild(t);
+  });
+</script>
 
 <!-- SECTION / BACKGROUND -->
 <!-- Set message background color one again -->
